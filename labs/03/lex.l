@@ -1,25 +1,22 @@
+
 %{
 #include "y.tab.h"
 %}
+%{
+int spacing = 1;
+%}
 
 %%
+a | the         		{ return ARTICLE; }
 
- "the" | "a"                     { return ARTICLE; }
+boy | girl | flower      		{ return NOUN; }
 
- "boy" | "girl" | "flower"       { return NOUN; }
+touches | likes | sees        		{ return VERB; }
 
- "touches" | "likes" | "sees"    { return VERB; }
+with        		{ return PREP; }
 
- "with"                          { return PREP; }
-
- \n                              { return '\n'; }
-
- .                               { return yytext[0]; }
+\n                       { spacing++; return '\n'; }
+[ \t]+                    
+^[ \t]*\n                
 
 %%
-
-int yywrap() {
-
-    return 1;
-
-}
